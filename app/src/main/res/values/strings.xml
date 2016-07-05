@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">VolleyStat</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="new_match">New Match</string>
+    <string name="my_team">My Team</string>
+    <string name="statistics">Statistics</string>
+</resources>
