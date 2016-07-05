@@ -12,7 +12,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import moumou.com.volleystat.R;
@@ -22,30 +24,12 @@ import moumou.com.volleystat.R;
  */
 public class FragmentTeam extends Fragment{
 
-    private DrawerLayout coordinatorLayout;
-
+    DrawerLayout coordinatorLayout;
     FloatingActionButton addPlayerButton;
+    ListView playerListView;
+    ArrayAdapter<String> playerListAdapter;
 
-
-
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        coordinatorLayout = (DrawerLayout) getView().findViewById(R.id.drawer_layout);
-//
-//        addPlayerButton = (Button) getView().findViewById(R.id.addPlayerButton);
-//        addPlayerButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar snackbar = Snackbar
-//                        .make(coordinatorLayout, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
-//
-//                snackbar.show();
-//            }
-//        });
-//    }
-
+    String[] playerArray;
 
     @Nullable
     @Override
@@ -57,6 +41,17 @@ public class FragmentTeam extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setFAB(view);
+
+        playerArray = new String[3];
+        playerArray[0] = "hoi";
+        playerArray[1] = "hoi2";
+
+
+        playerListView = (ListView) view.findViewById(R.id.playerListView);
+        playerListAdapter = new ArrayAdapter<String>(view.getContext(),
+                android.R.layout.simple_list_item_1, playerArray);
+        playerListView.setAdapter(playerListAdapter);
+
     }
 
     private void setFAB(View view) {
