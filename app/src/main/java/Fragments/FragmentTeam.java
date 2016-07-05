@@ -9,7 +9,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -32,13 +36,14 @@ public class FragmentTeam extends Fragment{
     FloatingActionButton addPlayerButton;
     ListView playerListView;
     TeamViewAdapter playerListAdapter;
-
+    Toolbar toolbar;
     ArrayList<Player> playerArray;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_team, container, false);
+        View v = inflater.inflate(R.layout.fragment_team, container, false);
+        return v;
     }
 
     @Override
@@ -46,6 +51,13 @@ public class FragmentTeam extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         setFAB(view);
 
+        setListView(view);
+
+
+
+    }
+
+    private void setListView(View view) {
         playerArray = new ArrayList<Player>();
         playerArray.add(new Player(2, "Dennis", Player.Position.SETTER, true));
         playerArray.add(new Player(134, "Tom", Player.Position.MIDDLE, true));
@@ -54,7 +66,6 @@ public class FragmentTeam extends Fragment{
         playerListView = (ListView) view.findViewById(R.id.playerListView);
         playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
         playerListView.setAdapter(playerListAdapter);
-
     }
 
     private void setFAB(View view) {
@@ -66,15 +77,19 @@ public class FragmentTeam extends Fragment{
             @Override
             public void onClick(View view) {
                 Context context = view.getContext();
-                CharSequence text = "Hello toast!";
+                //TODO insert player name
+                CharSequence text = "Player added!";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
-
-                //playerListView.setAdapter(playerListAdapter);
+                //TODO dialog to add player
+                playerArray.add(new Player(14, "Hoi", Player.Position.OPPOSITE, true));
+                playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
+                playerListView.setAdapter(playerListAdapter);
             }
         });
     }
+
 }
