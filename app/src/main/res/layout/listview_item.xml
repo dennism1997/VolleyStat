@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/playerNumberWrapper"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+                <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/playerNumber"
+                android:text="0"
+                android:textSize="30sp"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <TextView
+            android:id="@+id/playerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="NoName"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@+id/playerNumberWrapper"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/PlayerPosition"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="NoPosition"
+            android:layout_marginLeft="230dp"
+            android:layout_centerVertical="true" />
+            <!--android:layout_centerVertical="true"-->
+
+        </RelativeLayout>
+
+    </TableRow>
+</TableLayout>

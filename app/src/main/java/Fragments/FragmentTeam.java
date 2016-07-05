@@ -17,6 +17,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import Identities.Player;
+import Identities.TeamViewAdapter;
 import moumou.com.volleystat.R;
 
 /**
@@ -27,9 +31,9 @@ public class FragmentTeam extends Fragment{
     DrawerLayout coordinatorLayout;
     FloatingActionButton addPlayerButton;
     ListView playerListView;
-    ArrayAdapter<String> playerListAdapter;
+    TeamViewAdapter playerListAdapter;
 
-    String[] playerArray;
+    ArrayList<Player> playerArray;
 
     @Nullable
     @Override
@@ -42,14 +46,13 @@ public class FragmentTeam extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         setFAB(view);
 
-        playerArray = new String[3];
-        playerArray[0] = "hoi";
-        playerArray[1] = "hoi2";
+        playerArray = new ArrayList<Player>();
+        playerArray.add(new Player(2, "Dennis", Player.Position.SETTER, true));
+        playerArray.add(new Player(134, "Tom", Player.Position.MIDDLE, true));
 
 
         playerListView = (ListView) view.findViewById(R.id.playerListView);
-        playerListAdapter = new ArrayAdapter<String>(view.getContext(),
-                android.R.layout.simple_list_item_1, playerArray);
+        playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
         playerListView.setAdapter(playerListAdapter);
 
     }
@@ -68,6 +71,9 @@ public class FragmentTeam extends Fragment{
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
+
+                //playerListView.setAdapter(playerListAdapter);
             }
         });
     }

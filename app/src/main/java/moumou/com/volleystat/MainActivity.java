@@ -50,6 +50,18 @@ public class MainActivity extends AppCompatActivity {
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
+        Class temp2 = FragmentTeam.class;
+        Fragment temp = null;
+
+        try {
+            temp = (Fragment) temp2.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, temp).commit();
+
+
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {

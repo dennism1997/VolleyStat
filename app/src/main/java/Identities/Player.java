@@ -5,7 +5,7 @@ package Identities;
  */
 public class Player {
 
-    public static enum Position{MIDDLE, OUTSIDE, SETTER, OPPOSITE, LIBERO};
+    public enum Position{MIDDLE, OUTSIDE, SETTER, OPPOSITE, LIBERO};
     private int number;
     private String name;
     private Position position;
