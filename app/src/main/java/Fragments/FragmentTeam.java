@@ -49,8 +49,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_team, container, false);
-        return v;
+        return inflater.inflate(R.layout.fragment_team, container, false);
     }
 
     @Override
@@ -150,6 +149,12 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
+            Context context = getView().getContext();
+            //TODO implement edit
+            CharSequence text = "Storage Writing Error";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
     }
 
@@ -166,6 +171,12 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
         }catch (Exception e){
             e.printStackTrace();
+            Context context = getView().getContext();
+            //TODO implement edit
+            CharSequence text = "Storage Reading Error";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
         return result;
     }

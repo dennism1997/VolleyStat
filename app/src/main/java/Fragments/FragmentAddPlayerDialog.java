@@ -81,10 +81,13 @@ public class FragmentAddPlayerDialog extends DialogFragment {
                             Toast toast = Toast.makeText(view.getContext(),
                                     "Please fill in all the fields!", Toast.LENGTH_SHORT);
                             toast.show();
+                        } else if(getPlayerNumberInt()>999){
+                            Toast toast = Toast.makeText(view.getContext(),
+                                    "Please enter a shirt number < 999", Toast.LENGTH_SHORT);
+                            toast.show();
                         } else {
                             newPlayer = new Player(getPlayerNumberInt(),
                                     playerName.getText().toString(), position);
-                            //AddPlayerDialogListener activity = (AddPlayerDialogListener) getFragmentManager().findFragmentById(R.id.fragment_team);
                             addPlayerDialogListener.addPlayer(newPlayer);
                         }
                     }
