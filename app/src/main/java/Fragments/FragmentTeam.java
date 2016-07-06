@@ -8,6 +8,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -84,12 +85,21 @@ public class FragmentTeam extends Fragment{
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
-                //TODO dialog to add player
-                playerArray.add(new Player(14, "Hoi", Player.Position.OPPOSITE, true));
-                playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
-                playerListView.setAdapter(playerListAdapter);
+                showAddPlayerDialog(view);
+
+
             }
         });
     }
+
+    private void showAddPlayerDialog(View view) {
+        FragmentAddPlayerDialog addPlayerDialog = new FragmentAddPlayerDialog();
+        addPlayerDialog.show(getActivity().getFragmentManager(), "addPlayer");
+        //TODO dialog to add player
+        //playerArray.add(addPlayerDialog.getNewPlayer());
+        playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
+        playerListView.setAdapter(playerListAdapter);
+    }
+
 
 }
