@@ -25,6 +25,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import Identities.Player;
+import Identities.Position;
 import Identities.TeamViewAdapter;
 import moumou.com.volleystat.R;
 
@@ -60,8 +61,8 @@ public class FragmentTeam extends Fragment{
 
     private void setListView(View view) {
         playerArray = new ArrayList<Player>();
-        playerArray.add(new Player(2, "Dennis", Player.Position.SETTER, true));
-        playerArray.add(new Player(134, "Tom", Player.Position.MIDDLE, true));
+        playerArray.add(new Player(2, "Dennis", Position.SETTER, true));
+        playerArray.add(new Player(134, "Tom", Position.MIDDLE, true));
 
 
         playerListView = (ListView) view.findViewById(R.id.playerListView);

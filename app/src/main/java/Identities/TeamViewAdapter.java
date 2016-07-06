@@ -35,7 +35,7 @@ public class TeamViewAdapter extends ArrayAdapter<Player>{
         // Populate the data into the template view using the data object
         playerName.setText(player.getName());
         playerNumber.setText(String.valueOf(player.getNumber()));
-        playerPosition.setText(player.getPosition().toString().toLowerCase());
+        playerPosition.setText(player.getPosition().toString());
         // Return the completed view to render on screen
         return convertView;
     }
