@@ -10,4 +10,6 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="shirtNumber">Shirt Number</string>
+    <string name="editPlayer">Edit Player</string>
+    <string name="deletePlayer">Delete Player</string>
 </resources>

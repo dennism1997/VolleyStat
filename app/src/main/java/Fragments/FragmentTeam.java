@@ -9,9 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,11 +49,31 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setFAB(view);
-
         setListView(view);
+    }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.playerListView) {
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.team_context, menu);
+        }
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
+        switch (item.getItemId()) {
+            case R.id.teamContextEdit:
+                return true;
+            case R.id.teamContextDelete:
+                deletePlayer(info.position);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     private void setListView(View view) {
@@ -90,8 +114,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     @Override
     public void addPlayer(Player createdPlayer) {
         playerArray.add(createdPlayer);
-        playerListAdapter = new TeamViewAdapter(getView().getContext(), playerArray);
-        playerListView.setAdapter(playerListAdapter);
+        updatePlayerList();
         Context context = getView().getContext();
         //TODO insert player name
         CharSequence text = "Player " + createdPlayer.getName() +  " added!";
@@ -99,6 +122,22 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    private void updatePlayerList(){
+        playerListAdapter = new TeamViewAdapter(getView().getContext(), playerArray);
+        playerListView.setAdapter(playerListAdapter);
+    }
+
+    private void deletePlayer(int index) {
+        Context context = getView().getContext();
+        CharSequence text = "Player " + playerArray.get(index).getName() +  " deleted!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+        playerArray.remove(index);
+        updatePlayerList();
+
     }
 
 }
