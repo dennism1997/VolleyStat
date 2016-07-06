@@ -61,6 +61,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         playerListView = (ListView) view.findViewById(R.id.playerListView);
         playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
         playerListView.setAdapter(playerListAdapter);
+        registerForContextMenu(playerListView);
     }
 
     private void setFAB(View view) {
@@ -71,17 +72,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Context context = view.getContext();
-                //TODO insert player name
-                CharSequence text = "Player added!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
                 showAddPlayerDialog(view);
-
-
             }
         });
     }
@@ -101,5 +92,13 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         playerArray.add(createdPlayer);
         playerListAdapter = new TeamViewAdapter(getView().getContext(), playerArray);
         playerListView.setAdapter(playerListAdapter);
+        Context context = getView().getContext();
+        //TODO insert player name
+        CharSequence text = "Player " + createdPlayer.getName() +  " added!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
+
 }
