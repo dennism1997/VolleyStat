@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import Identities.Player;
 import Identities.Position;
-import Identities.PositionAdapter;
+import Adapters.PositionAdapter;
 import moumou.com.volleystat.R;
 
 /**

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import Identities.Player;
 import Identities.Position;
-import Identities.TeamViewAdapter;
+import Adapters.TeamViewAdapter;
 import moumou.com.volleystat.R;
 
 /**
@@ -67,6 +67,12 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
         switch (item.getItemId()) {
             case R.id.teamContextEdit:
+                Context context = getView().getContext();
+                //TODO implement edit
+                CharSequence text = "To be implemented!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 return true;
             case R.id.teamContextDelete:
                 deletePlayer(info.position);
@@ -106,8 +112,6 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         FragmentAddPlayerDialog addPlayerDialog = new FragmentAddPlayerDialog();
         addPlayerDialog.setTargetFragment(this, 0);
         addPlayerDialog.show(getActivity().getFragmentManager(), "addPlayer");
-
-
     }
 
 
@@ -117,7 +121,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         updatePlayerList();
         Context context = getView().getContext();
         //TODO insert player name
-        CharSequence text = "Player " + createdPlayer.getName() +  " added!";
+        CharSequence text = "Player " + createdPlayer.getName() +  " added";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -131,13 +135,12 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     private void deletePlayer(int index) {
         Context context = getView().getContext();
-        CharSequence text = "Player " + playerArray.get(index).getName() +  " deleted!";
+        CharSequence text = "Player " + playerArray.get(index).getName() +  " deleted";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
         playerArray.remove(index);
         updatePlayerList();
-
     }
 
 }

@@ -1,4 +1,4 @@
-package Identities;
+package Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import Identities.Player;
 import moumou.com.volleystat.R;
 
 /**

@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import Identities.Player;
+import Identities.Position;
 import Identities.Team;
 
 import static org.junit.Assert.*;
@@ -19,14 +20,14 @@ public class TeamTest {
     Team team;
     @Before
     public void setUp(){
-        playerArrayList.add(new Player(1,"dennis", Player.Position.MIDDLE, true));
-        playerArrayList.add(new Player(2,"dennis", Player.Position.MIDDLE, true));
-        playerArrayList.add(new Player(3,"dennis", Player.Position.MIDDLE, true));
-        playerArrayList.add(new Player(4,"dennis", Player.Position.MIDDLE, true));
-        playerArrayList.add(new Player(5,"dennis", Player.Position.MIDDLE, true));
-        playerArrayList.add(new Player(6,"dennis", Player.Position.MIDDLE, true));
-        playerArrayList.add(new Player(7,"dennis", Player.Position.MIDDLE, true));
-        playerArrayList.add(new Player(8,"dennis", Player.Position.MIDDLE, true));
+        playerArrayList.add(new Player(1,"dennis", Position.MIDDLE, true));
+        playerArrayList.add(new Player(2,"dennis", Position.MIDDLE, true));
+        playerArrayList.add(new Player(3,"dennis", Position.MIDDLE, true));
+        playerArrayList.add(new Player(4,"dennis", Position.MIDDLE, true));
+        playerArrayList.add(new Player(5,"dennis", Position.MIDDLE, true));
+        playerArrayList.add(new Player(6,"dennis", Position.MIDDLE, true));
+        playerArrayList.add(new Player(7,"dennis", Position.MIDDLE, true));
+        playerArrayList.add(new Player(8,"dennis", Position.MIDDLE, true));
         team = new Team(playerArrayList);
     }
 
