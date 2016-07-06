@@ -1,9 +1,11 @@
 package Identities;
 
+import java.io.Serializable;
+
 /**
  * Created by dennis on 05-07-16.
  */
-public class Player {
+public class Player implements Serializable{
 
 
     private int number;

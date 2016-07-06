@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +21,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import Identities.Player;
@@ -31,6 +38,7 @@ import moumou.com.volleystat.R;
  */
 public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.AddPlayerDialogListener {
 
+    private final String STORAGE_FILENAME = "playerData";
     DrawerLayout coordinatorLayout;
     FloatingActionButton addPlayerButton;
     ListView playerListView;
@@ -50,6 +58,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         super.onViewCreated(view, savedInstanceState);
         setFAB(view);
         setListView(view);
+
     }
 
     @Override
@@ -84,13 +93,10 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     private void setListView(View view) {
         playerArray = new ArrayList<Player>();
-        playerArray.add(new Player(2, "Dennis", Position.SETTER, true));
-        playerArray.add(new Player(134, "Tom", Position.MIDDLE, true));
-
+        playerArray = readPlayerList();
 
         playerListView = (ListView) view.findViewById(R.id.playerListView);
-        playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
-        playerListView.setAdapter(playerListAdapter);
+        updatePlayerList();
         registerForContextMenu(playerListView);
     }
 
@@ -131,6 +137,37 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     private void updatePlayerList(){
         playerListAdapter = new TeamViewAdapter(getView().getContext(), playerArray);
         playerListView.setAdapter(playerListAdapter);
+        writePlayerList();
+    }
+
+    private void writePlayerList() {
+        try {
+            FileOutputStream outputStream = getActivity().openFileOutput(STORAGE_FILENAME, Context.MODE_PRIVATE);
+            ObjectOutputStream of = new ObjectOutputStream(outputStream);
+            of.writeObject(playerArray);
+            of.flush();
+            of.close();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ArrayList<Player> readPlayerList() {
+        ArrayList<Player> result = playerArray;
+        FileInputStream fis;
+
+        try{
+            fis = getActivity().openFileInput(STORAGE_FILENAME);
+            ObjectInputStream oi = new ObjectInputStream(fis);
+            result = (ArrayList<Player>) oi.readObject();
+            oi.close();
+            fis.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
     private void deletePlayer(int index) {
