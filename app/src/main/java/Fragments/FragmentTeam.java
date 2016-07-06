@@ -1,24 +1,17 @@
 package Fragments;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,7 +25,7 @@ import moumou.com.volleystat.R;
 /**
  * Created by dennis on 05-07-16.
  */
-public class FragmentTeam extends Fragment{
+public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.AddPlayerDialogListener {
 
     DrawerLayout coordinatorLayout;
     FloatingActionButton addPlayerButton;
@@ -94,13 +87,19 @@ public class FragmentTeam extends Fragment{
     }
 
     private void showAddPlayerDialog(View view) {
+        FragmentManager fm = getActivity().getFragmentManager();
         FragmentAddPlayerDialog addPlayerDialog = new FragmentAddPlayerDialog();
+        addPlayerDialog.setTargetFragment(this, 0);
         addPlayerDialog.show(getActivity().getFragmentManager(), "addPlayer");
-        //TODO dialog to add player
-        //playerArray.add(addPlayerDialog.getNewPlayer());
-        playerListAdapter = new TeamViewAdapter(view.getContext(), playerArray);
-        playerListView.setAdapter(playerListAdapter);
+
+
     }
 
 
+    @Override
+    public void addPlayer(Player createdPlayer) {
+        playerArray.add(createdPlayer);
+        playerListAdapter = new TeamViewAdapter(getView().getContext(), playerArray);
+        playerListView.setAdapter(playerListAdapter);
+    }
 }

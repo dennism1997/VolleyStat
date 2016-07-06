@@ -3,17 +3,13 @@ package Fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import Identities.Player;
@@ -26,6 +22,8 @@ import moumou.com.volleystat.R;
  */
 public class FragmentAddPlayerDialog extends DialogFragment {
 
+    public AddPlayerDialogListener addPlayerDialogListener;
+
     Player newPlayer = null;
     LayoutInflater inflater;
     View view;
@@ -34,6 +32,17 @@ public class FragmentAddPlayerDialog extends DialogFragment {
     private EditText playerNumber;
     private Spinner positionSpinner;
     private Position position = null;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        try { addPlayerDialogListener = (AddPlayerDialogListener) getTargetFragment();
+
+        } catch (ClassCastException e){
+            throw new ClassCastException("Calling Fragment must implement OnAddFriendListener");
+        }
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -75,6 +84,8 @@ public class FragmentAddPlayerDialog extends DialogFragment {
                         } else {
                             newPlayer = new Player(getPlayerNumberInt(),
                                     playerName.getText().toString(), position);
+                            //AddPlayerDialogListener activity = (AddPlayerDialogListener) getFragmentManager().findFragmentById(R.id.fragment_team);
+                            addPlayerDialogListener.addPlayer(newPlayer);
                         }
                     }
                 })
@@ -113,7 +124,7 @@ public class FragmentAddPlayerDialog extends DialogFragment {
     }
 
     public interface AddPlayerDialogListener {
-        void onFinish(Player createdPlayer);
+        void addPlayer(Player createdPlayer);
     }
 
 }
