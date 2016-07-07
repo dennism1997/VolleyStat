@@ -1,8 +1,10 @@
 package Fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -63,7 +65,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId()==R.id.playerListView) {
+        if (v.getId() == R.id.playerListView) {
             MenuInflater inflater = getActivity().getMenuInflater();
             inflater.inflate(R.menu.team_context, menu);
         }
@@ -93,6 +95,19 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     private void setListView(View view) {
         playerArray = new ArrayList<Player>();
         playerArray = readPlayerList();
+
+        if (playerArray.isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(getString(R.string.dialogTeamIsEmptyTitle));
+            builder.setMessage(getString(R.string.dialogTeamIsEmptyMessage));
+            builder.setNeutralButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.show();
+        }
 
         playerListView = (ListView) view.findViewById(R.id.playerListView);
         updatePlayerList();
@@ -126,14 +141,14 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         updatePlayerList();
         Context context = getView().getContext();
         //TODO insert player name
-        CharSequence text = "Player " + createdPlayer.getName() +  " added";
+        CharSequence text = "Player " + createdPlayer.getName() + " added";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
-    private void updatePlayerList(){
+    private void updatePlayerList() {
         playerListAdapter = new TeamViewAdapter(getView().getContext(), playerArray);
         playerListView.setAdapter(playerListAdapter);
         writePlayerList();
@@ -162,14 +177,14 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         ArrayList<Player> result = playerArray;
         FileInputStream fis;
 
-        try{
+        try {
             fis = getActivity().openFileInput(STORAGE_FILENAME);
             ObjectInputStream oi = new ObjectInputStream(fis);
             result = (ArrayList<Player>) oi.readObject();
             oi.close();
             fis.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             Context context = getView().getContext();
             //TODO implement edit
@@ -183,7 +198,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     private void deletePlayer(int index) {
         Context context = getView().getContext();
-        CharSequence text = "Player " + playerArray.get(index).getName() +  " deleted";
+        CharSequence text = "Player " + playerArray.get(index).getName() + " deleted";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();

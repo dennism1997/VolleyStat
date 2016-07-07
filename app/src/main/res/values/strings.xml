@@ -12,4 +12,7 @@
     <string name="shirtNumber">Shirt Number</string>
     <string name="editPlayer">Edit Player</string>
     <string name="deletePlayer">Delete Player</string>
+    <string name="dialogTeamIsEmptyMessage">It seems your team is empty! Press the plus button in
+        the lower right corner to add players</string>
+    <string name="dialogTeamIsEmptyTitle">No players yet</string>
 </resources>
