@@ -8,14 +8,20 @@ import java.util.ArrayList;
  */
 public class Team implements Serializable{
 
+    private String name;
     private ArrayList<Player> players;
 
-    public Team(ArrayList<Player> team) {
+    public Team(ArrayList<Player> team, String name) {
         this.players = team;
+        this.name = name;
     }
 
     public Player getPlayer(int i) {
         return players.get(i);
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public void substitute(int indexIn, int indexOut) {
@@ -68,4 +74,6 @@ public class Team implements Serializable{
     public boolean enoughPlayers(){
         return players.size() >= 6;
     }
+
+
 }

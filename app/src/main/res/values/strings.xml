@@ -15,4 +15,7 @@
     <string name="dialogTeamIsEmptyMessage">It seems your team is empty! Press the plus button in
         the lower right corner to add players</string>
     <string name="dialogTeamIsEmptyTitle">No players yet</string>
+    <string name="checkAvailablePlayers">check all available players</string>
+    <string name="dialogInvalidTeamTitle">Team invalid</string>
+    <string name="dialogInvalidTeamMessage">Your team should consist of at least 6 people! \nYou can edit your team in the \n&lt;b>My Team&lt;/b> tab</string>
 </resources>

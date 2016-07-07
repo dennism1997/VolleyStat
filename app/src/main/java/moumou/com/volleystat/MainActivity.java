@@ -24,11 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
-    ListView listView;
-    ArrayAdapter<String> listAdapter;
-    String fragmentArray[] = {"New Match", "My Team", "Statistics"};
-    DrawerLayout drawerLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +45,16 @@ public class MainActivity extends AppCompatActivity {
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
-        Class temp2 = FragmentTeam.class;
-        Fragment temp = null;
+        Class startFragmentClass = FragmentNew.class;
+        Fragment startFragment = null;
 
         try {
-            temp = (Fragment) temp2.newInstance();
+            startFragment = (Fragment) startFragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, temp).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, startFragment).commit();
 
 
     }

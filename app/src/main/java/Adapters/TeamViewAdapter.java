@@ -22,22 +22,22 @@ public class TeamViewAdapter extends ArrayAdapter<Player>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
         // Get the data item for this position
         Player player = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_item, parent, false);
+        if (view == null) {
+            view = LayoutInflater.from(getContext()).inflate(R.layout.listview_item, parent, false);
         }
         // Lookup view for data population
-        TextView playerName = (TextView) convertView.findViewById(R.id.playerName);
-        TextView playerNumber = (TextView) convertView.findViewById(R.id.playerNumber);
-        TextView playerPosition = (TextView) convertView.findViewById(R.id.PlayerPosition);
+        TextView playerName = (TextView) view.findViewById(R.id.playerName);
+        TextView playerNumber = (TextView) view.findViewById(R.id.playerNumber);
+        TextView playerPosition = (TextView) view.findViewById(R.id.PlayerPosition);
         // Populate the data into the template view using the data object
         playerName.setText(player.getName());
         playerNumber.setText(String.valueOf(player.getNumber()));
         playerPosition.setText(player.getPosition().toString());
         // Return the completed view to render on screen
-        return convertView;
+        return view;
     }
 }

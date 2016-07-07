@@ -107,7 +107,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     private void setListView(View view) {
         //playerArray = new ArrayList<Player>();
-        team = new Team(new ArrayList<Player>());
+        team = new Team(new ArrayList<Player>(), "temp");
         if(!firstTime) {
             team = readTeamFromStorage();
         }
