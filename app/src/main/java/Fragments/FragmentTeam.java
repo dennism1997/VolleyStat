@@ -38,7 +38,7 @@ import moumou.com.volleystat.R;
  */
 public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.AddPlayerDialogListener {
 
-    private final String STORAGE_FILENAME = "playerData";
+    private final String HOMETEAM_STORAGE = "homeTeam";
     DrawerLayout coordinatorLayout;
     FloatingActionButton addPlayerButton;
     ListView playerListView;
@@ -166,7 +166,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     private void writeTeamToStorage() {
         try {
-            FileOutputStream outputStream = getActivity().openFileOutput(STORAGE_FILENAME, Context.MODE_PRIVATE);
+            FileOutputStream outputStream = getActivity().openFileOutput(HOMETEAM_STORAGE, Context.MODE_PRIVATE);
             ObjectOutputStream of = new ObjectOutputStream(outputStream);
             of.writeObject(team);
             of.flush();
@@ -188,7 +188,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         FileInputStream fis;
 
         try {
-            fis = getActivity().openFileInput(STORAGE_FILENAME);
+            fis = getActivity().openFileInput(HOMETEAM_STORAGE);
             ObjectInputStream oi = new ObjectInputStream(fis);
             result = (Team) oi.readObject();
             oi.close();

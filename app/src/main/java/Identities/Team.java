@@ -24,6 +24,9 @@ public class Team implements Serializable{
         players.set(indexIn, temp);
     }
 
+    /**
+     * Rotates the 6 players in the field
+     */
     public void rotate() {
         Player temp = players.get(0);
         for(int i = 0; i < 5; i++){
@@ -60,5 +63,9 @@ public class Team implements Serializable{
 
     public void removePlayer(int index) {
         players.remove(index);
+    }
+
+    public boolean enoughPlayers(){
+        return players.size() >= 6;
     }
 }

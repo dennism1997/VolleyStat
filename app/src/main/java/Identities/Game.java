@@ -21,7 +21,7 @@ public class Game {
         homeTeamScore++;
     }
 
-    public void awayScore(){
+    public void awayScored(){
         awayTeamScore++;
     }
 
