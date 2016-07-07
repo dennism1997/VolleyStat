@@ -1,11 +1,12 @@
 package Identities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by dennis on 05-07-16.
  */
-public class Team {
+public class Team implements Serializable{
 
     private ArrayList<Player> players;
 
@@ -32,6 +33,22 @@ public class Team {
 
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public void addPlayer(Player player){
+        this.players.add(player);
+    }
+
+    public boolean isEmpty(){
+        return players.isEmpty();
+    }
+
     public String toString() {
         String result = "";
         for(int i=0; i<this.players.size(); i++){
@@ -39,5 +56,9 @@ public class Team {
         }
 
         return result;
+    }
+
+    public void removePlayer(int index) {
+        players.remove(index);
     }
 }

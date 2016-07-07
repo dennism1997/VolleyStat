@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 
 import Identities.Player;
 import Adapters.TeamViewAdapter;
+import Identities.Team;
 import moumou.com.volleystat.R;
 
 /**
@@ -44,7 +44,8 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     ListView playerListView;
     TeamViewAdapter playerListAdapter;
     Toolbar toolbar;
-    ArrayList<Player> playerArray;
+    //ArrayList<Player> playerArray;
+    Team team;
     final String PREFS_NAME = "sharedPrefs";
     private boolean firstTime = false;
 
@@ -91,7 +92,7 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
             case R.id.teamContextEdit:
                 Context context = getView().getContext();
                 //TODO implement edit
-                CharSequence text = "To be implemented!";
+                CharSequence text = "Will be added soon!";
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
@@ -105,12 +106,13 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     }
 
     private void setListView(View view) {
-        playerArray = new ArrayList<Player>();
+        //playerArray = new ArrayList<Player>();
+        team = new Team(new ArrayList<Player>());
         if(!firstTime) {
-            playerArray = readPlayerList();
+            team = readTeamFromStorage();
         }
 
-        if (playerArray.isEmpty()) {
+        if (team.isEmpty()) {
             showEmptyTeamDialog();
         }
 
@@ -144,8 +146,9 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     @Override
     public void addPlayer(Player createdPlayer) {
-        playerArray.add(createdPlayer);
+        team.addPlayer(createdPlayer);
         updatePlayerList();
+
         Context context = getView().getContext();
         //TODO insert player name
         CharSequence text = "Player " + createdPlayer.getName() + " added";
@@ -156,16 +159,16 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     }
 
     private void updatePlayerList() {
-        playerListAdapter = new TeamViewAdapter(getView().getContext(), playerArray);
+        playerListAdapter = new TeamViewAdapter(getView().getContext(), team.getPlayers());
         playerListView.setAdapter(playerListAdapter);
-        writePlayerList();
+        writeTeamToStorage();
     }
 
-    private void writePlayerList() {
+    private void writeTeamToStorage() {
         try {
             FileOutputStream outputStream = getActivity().openFileOutput(STORAGE_FILENAME, Context.MODE_PRIVATE);
             ObjectOutputStream of = new ObjectOutputStream(outputStream);
-            of.writeObject(playerArray);
+            of.writeObject(team);
             of.flush();
             of.close();
             outputStream.close();
@@ -180,14 +183,14 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         }
     }
 
-    private ArrayList<Player> readPlayerList() {
-        ArrayList<Player> result = playerArray;
+    private Team readTeamFromStorage() {
+        Team result = team;
         FileInputStream fis;
 
         try {
             fis = getActivity().openFileInput(STORAGE_FILENAME);
             ObjectInputStream oi = new ObjectInputStream(fis);
-            result = (ArrayList<Player>) oi.readObject();
+            result = (Team) oi.readObject();
             oi.close();
             fis.close();
 
@@ -205,11 +208,11 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     private void deletePlayer(int index) {
         Context context = getView().getContext();
-        CharSequence text = "Player " + playerArray.get(index).getName() + " deleted";
+        CharSequence text = "Player " + team.getPlayers().get(index).getName() + " deleted";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-        playerArray.remove(index);
+        team.removePlayer(index);
         updatePlayerList();
     }
 
