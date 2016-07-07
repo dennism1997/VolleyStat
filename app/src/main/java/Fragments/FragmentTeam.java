@@ -5,14 +5,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -24,14 +24,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import Identities.Player;
-import Identities.Position;
 import Adapters.TeamViewAdapter;
 import moumou.com.volleystat.R;
 
@@ -47,11 +45,25 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
     TeamViewAdapter playerListAdapter;
     Toolbar toolbar;
     ArrayList<Player> playerArray;
+    final String PREFS_NAME = "sharedPrefs";
+    private boolean firstTime = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_team, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_team, container, false);
+
+        SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+
+        if (settings.getBoolean("firstTime", true)) {
+            firstTime = true;
+
+            // record the fact that the app has been started at least once
+            settings.edit().putBoolean("firstTime", false).apply();
+        }
+
+        return v;
     }
 
     @Override
@@ -94,25 +106,20 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     private void setListView(View view) {
         playerArray = new ArrayList<Player>();
-        playerArray = readPlayerList();
+        if(!firstTime) {
+            playerArray = readPlayerList();
+        }
 
         if (playerArray.isEmpty()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(getString(R.string.dialogTeamIsEmptyTitle));
-            builder.setMessage(getString(R.string.dialogTeamIsEmptyMessage));
-            builder.setNeutralButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            AlertDialog dialog = builder.show();
+            showEmptyTeamDialog();
         }
 
         playerListView = (ListView) view.findViewById(R.id.playerListView);
         updatePlayerList();
         registerForContextMenu(playerListView);
     }
+
+
 
     private void setFAB(View view) {
         coordinatorLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
@@ -206,4 +213,16 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
         updatePlayerList();
     }
 
+    private void showEmptyTeamDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(getString(R.string.dialogTeamIsEmptyTitle));
+        builder.setMessage(getString(R.string.dialogTeamIsEmptyMessage));
+        builder.setNeutralButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.show();
+    }
 }
