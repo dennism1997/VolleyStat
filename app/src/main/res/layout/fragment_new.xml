@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/checkAvailablePlayers"
         android:gravity="center"
         android:padding="8dp"
-        android:textSize="22dp"/>
+        android:text="@string/checkAvailablePlayers"
+        android:textSize="22sp" />
+
     <GridView
+        android:id="@+id/availablePlayersGridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="3"
-        android:id="@+id/availablePlayersGridView" />
+        android:numColumns="3" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </ScrollView>
+
 </LinearLayout>

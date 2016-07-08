@@ -73,8 +73,8 @@ public class FragmentNew extends Fragment{
             //TODO implement edit
             CharSequence text = "Storage Reading Error";
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Toast.makeText(context, text, duration).show();
+
         }
         return result;
     }
