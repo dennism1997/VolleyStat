@@ -146,15 +146,15 @@ public class FragmentTeam extends Fragment implements FragmentAddPlayerDialog.Ad
 
     @Override
     public void addPlayer(Player createdPlayer) {
-        team.addPlayer(createdPlayer);
-        updatePlayerList();
+        CharSequence text = "A player with that number already exists";
+        if(!team.containsNumber(createdPlayer.getNumber())) {
+            team.addPlayer(createdPlayer);
+            updatePlayerList();
+            text = "Player " + createdPlayer.getName() + " added";
+        }
 
-        Context context = getView().getContext();
-        //TODO insert player name
-        CharSequence text = "Player " + createdPlayer.getName() + " added";
-        int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
+        Toast toast = Toast.makeText(getView().getContext(), text, Toast.LENGTH_SHORT);
         toast.show();
     }
 

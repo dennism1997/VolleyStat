@@ -75,5 +75,13 @@ public class Team implements Serializable{
         return players.size() >= 6;
     }
 
+    public boolean containsNumber(int n) {
+        for(Player p : this.getPlayers()){
+            if(p.getNumber() == n){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
